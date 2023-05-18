@@ -22,5 +22,10 @@ namespace LaMiaPizzeria.Models
             Description = description;
             Price = price;
         }
+
+        public Pizza()
+        {
+
+        }
     }
 }
