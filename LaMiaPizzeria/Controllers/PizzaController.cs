@@ -15,6 +15,11 @@ namespace LaMiaPizzeria.Controllers
             }
         }
 
+        public IActionResult Create()
+        {
+           return View();
+        }
+
         public IActionResult Details(int id)
         {
             using (PizzeriaContext db = new PizzeriaContext())
