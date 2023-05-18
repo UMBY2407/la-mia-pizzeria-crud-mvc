@@ -53,7 +53,6 @@ namespace LaMiaPizzeria.Controllers
                     return NotFound($"La pizza con id {id} non è stato trovato!");
                 }
             }
-
         }
     }
 }
