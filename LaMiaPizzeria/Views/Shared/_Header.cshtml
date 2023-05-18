@@ -1,0 +1,33 @@
+﻿<nav class="navbar navbar-expand-lg  bg-warning">
+    <div class="container-fluid">
+        <a class="navbar-brand d-flex align-items-center" href="@Url.Action("Index", "Pizza")">
+            <img src="/img/pizza-shop.png"
+                 alt="Logo"
+                 height="40"
+                 class="d-inline-block align-text-top me-3" />
+            <span class="text-success fw-bold">Pizzeria</span>  <span class="text-light fw-bold">Mamma</span> <span class="text-danger fw-bold">Mia!</span>
+        </a>
+        <button class="navbar-toggler"
+                type="button"
+                data-bs-toggle="collapse"
+                data-bs-target="#navbarNav"
+                aria-controls="navbarNav"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav">
+                <li class="nav-item">
+                    <a class="nav-link active text-light fw-semibold" aria-current="page" href="@Url.Action("Index", "Home")">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light fw-semibold" href="@Url.Action("Contacts", "Home")">Contatti</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-light fw-semibold" href="@Url.Action("Privacy", "Home")">Privacy</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
