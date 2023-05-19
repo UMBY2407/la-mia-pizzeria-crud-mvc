@@ -2,36 +2,37 @@
 
 <h1>Aggiungi qui la tua Nuova Pizza!</h1>
 <div class="container">
-	<div class="row">
-		<div class="col">
-			<form asp-controller="Pizza" asp-action="Create" metohd="post">
-				@Html.AntiForgeryToken()
-				<div class="mb-3">
-					<label asp-for="Name" class="form-label">Nome Pizza</label>
-					<input asp-for="Name" type="text" class="form-control" placeholder="Nome..." required>
-					<span asp-validation-for="Name" class="text-danger"></span>
-				</div>
-				<div class="mb-3">
-					<label asp-for="Description" class="form-label">Descrizione Pizza</label>
-					<textarea asp-for="Description" rows="10" class="form-control" placeholder="Descrizione..."></textarea>
-					<span asp-validation-for="Description" class="text-danger"></span>
-				</div>
-				<div class="mb-3">
-					<label asp-for="Image" class="form-label">URL Immagine o Percorso</label>
-					<input asp-for="Image" type="text" class="form-control" placeholder="URL/Percorso..." required>
-					<span asp-validation-for="Image" class="text-danger"></span>
-				</div>
-				<div class="mb-3">
-					<label asp-for="Price" class="form-label">Prezzo Pizza</label>
-					<input asp-for="Price" type="text" class="form-control" placeholder="Prezzo..." required>
-					<span asp-validation-for="Price" class="text-danger"></span>
-				</div>
-			</form>
+	<form asp-controller="Pizza" asp-action="Create" metohd="post">
+		<div class="row">
+			<div class="col">
+			
+					@Html.AntiForgeryToken()
+					<div class="mb-3">
+						<label asp-for="Name" class="form-label">Nome Pizza</label>
+						<input asp-for="Name" type="text" class="form-control" placeholder="Nome..." required>
+						<span asp-validation-for="Name" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="Description" class="form-label">Descrizione Pizza</label>
+						<textarea asp-for="Description" rows="10" class="form-control" placeholder="Descrizione..."></textarea>
+						<span asp-validation-for="Description" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="Image" class="form-label">URL Immagine o Percorso</label>
+						<input asp-for="Image" type="text" class="form-control" placeholder="URL/Percorso..." required>
+						<span asp-validation-for="Image" class="text-danger"></span>
+					</div>
+					<div class="mb-3">
+						<label asp-for="Price" class="form-label">Prezzo Pizza</label>
+						<input asp-for="Price" type="text" class="form-control" placeholder="Prezzo..." required>
+						<span asp-validation-for="Price" class="text-danger"></span>
+					</div>
+			</div>
 		</div>
-	</div>
-	<div class="row">
-		<div class="col">
-			<button type="submit" class="btn btn-primary">Aggiungi</button>
+		<div class="row">
+			<div class="col">
+				<button type="submit" class="btn btn-primary">Aggiungi</button>
+			</div>
 		</div>
-	</div>
+	</form>
 </div>
