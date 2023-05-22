@@ -1,6 +1,7 @@
 ﻿using LaMiaPizzeria.Database;
 using LaMiaPizzeria.Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace LaMiaPizzeria.Controllers
 {
@@ -21,6 +22,23 @@ namespace LaMiaPizzeria.Controllers
            return View();
         }
 
+        [HttpGet]
+        public IActionResult Update(int id)
+        {
+            using (PizzeriaContext db = new PizzeriaContext())
+            {
+                Pizza? pizzaToModify = db.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
+                if (pizzaToModify != null)
+                {
+                    return View("Update", pizzaToModify);
+                }
+                else
+                {
+                    return NotFound("Pizza da modificare inesistente");
+                }
+            }
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public IActionResult Create(Pizza newPizza)
@@ -38,10 +56,48 @@ namespace LaMiaPizzeria.Controllers
             }
         }
 
-        [HttpGet]
-        public IActionResult Delete()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
         {
-            return View();
+            using(PizzeriaContext db = new PizzeriaContext())
+            {
+                Pizza? pizzaToDelete = db.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
+                if(pizzaToDelete != null)
+                {
+                    db.Remove(pizzaToDelete);
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                } else
+                {
+                    return NotFound("Non ho trovato la pizza da eliminare");
+                }
+            }
+        }
+
+        [HttpPost]
+        [IgnoreAntiforgeryToken]
+        public IActionResult Update(int id, Pizza modifiedPizza)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("Update", modifiedPizza);
+            }
+            using (PizzeriaContext db = new PizzeriaContext())
+            {
+                Pizza? pizzaToModify = db.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
+                if(pizzaToModify != null)
+                {
+                    pizzaToModify.Name = modifiedPizza.Name;
+                    pizzaToModify.Description = modifiedPizza.Description;
+                    pizzaToModify.Image = modifiedPizza.Image;
+                    db.SaveChanges();
+                    return RedirectToAction("Index");
+                }else
+                {
+                    return NotFound("L'articolo da modificare non esiste!");
+                }
+            }
         }
 
         public IActionResult Details(int id)
