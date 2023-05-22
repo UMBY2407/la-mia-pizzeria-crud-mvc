@@ -38,6 +38,12 @@ namespace LaMiaPizzeria.Controllers
             }
         }
 
+        [HttpGet]
+        public IActionResult Delete()
+        {
+            return View();
+        }
+
         public IActionResult Details(int id)
         {
             using (PizzeriaContext db = new PizzeriaContext())
