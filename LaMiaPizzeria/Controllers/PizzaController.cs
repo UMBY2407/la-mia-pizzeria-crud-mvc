@@ -2,6 +2,7 @@
 using LaMiaPizzeria.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using LaMiaPizzeria.Models.ModelForViews;
 
 namespace LaMiaPizzeria.Controllers
 {
@@ -19,7 +20,15 @@ namespace LaMiaPizzeria.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-           return View();
+            using (PizzeriaContext db = new PizzeriaContext)
+            {
+                List<PizzaCategory> pizzaCategories = db.PizzaCategories.ToList();
+
+                PizzaListCategory modelForView = new PizzaListCategory();
+                modelForView.PizzaCategories = pizzaCategories;
+
+                return View(modelForView);
+            }
         }
 
         [HttpGet]
@@ -41,16 +50,21 @@ namespace LaMiaPizzeria.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Pizza newPizza)
+        public IActionResult Create(PizzaListCategory data)
         {
             if (!ModelState.IsValid)
             {
-                return View("Create", newPizza);
+                using(PizzeriaContext db = new PizzeriaContext())
+                {
+                    List<PizzaCategory> pizzaCategories = db.PizzaCategories.ToList();
+                    data.PizzaCategories = pizzaCategories;
+                    return View("Create", data);
+                }
             }
 
             using (PizzeriaContext db = new PizzeriaContext())
             {
-                db.Pizzas.Add(newPizza);
+                db.Pizzas.Add(data.Pizzas);
                 db.SaveChanges();
                 return RedirectToAction("Index");
             }
@@ -77,25 +91,35 @@ namespace LaMiaPizzeria.Controllers
 
         [HttpPost]
         [IgnoreAntiforgeryToken]
-        public IActionResult Update(int id, Pizza modifiedPizza)
+        public IActionResult Update(int id, PizzaListCategory data)
         {
             if (!ModelState.IsValid)
             {
-                return View("Update", modifiedPizza);
+                using (PizzeriaContext db = new PizzeriaContext())
+                {
+                    List<PizzaCategory> pizzaCategories = db.PizzaCategories.ToList();
+                    data.PizzaCategories = pizzaCategories;
+
+                    return View("Update", data);
+                }
             }
-            using (PizzeriaContext db = new PizzeriaContext())
+            else
             {
-                Pizza? pizzaToModify = db.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
-                if(pizzaToModify != null)
+                using (PizzeriaContext db = new PizzeriaContext())
                 {
-                    pizzaToModify.Name = modifiedPizza.Name;
-                    pizzaToModify.Description = modifiedPizza.Description;
-                    pizzaToModify.Image = modifiedPizza.Image;
-                    db.SaveChanges();
-                    return RedirectToAction("Index");
-                }else
-                {
-                    return NotFound("L'articolo da modificare non esiste!");
+                    Pizza? pizzaToModify = db.Pizzas.Where(pizza => pizza.Id == id).FirstOrDefault();
+                    if (pizzaToModify != null)
+                    {
+                        pizzaToModify.Name = data.Pizzas.Name;
+                        pizzaToModify.Description = data.Pizzas.Description;
+                        pizzaToModify.Image = data.Pizzas.Image;
+                        db.SaveChanges();
+                        return RedirectToAction("Index");
+                    }
+                    else
+                    {
+                        return NotFound("L'articolo da modificare non esiste!");
+                    }
                 }
             }
         }
