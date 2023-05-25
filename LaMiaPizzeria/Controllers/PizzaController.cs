@@ -20,7 +20,7 @@ namespace LaMiaPizzeria.Controllers
         [HttpGet]
         public IActionResult Create()
         {
-            using (PizzeriaContext db = new PizzeriaContext)
+            using (PizzeriaContext db = new PizzeriaContext())
             {
                 List<PizzaCategory> pizzaCategories = db.PizzaCategories.ToList();
 
