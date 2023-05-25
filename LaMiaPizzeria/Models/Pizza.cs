@@ -13,6 +13,8 @@ namespace LaMiaPizzeria.Models
         [Column(TypeName = "text")]
         public string Description { get; set; }
         public float Price { get; set; }
+        public int? PizzaCategoryId { get; set; }
+        public PizzaCategory? Categoria { get; set; }
 
         public Pizza(int id, string image, string name, string description, float price)
         {
