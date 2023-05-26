@@ -25,6 +25,7 @@ namespace LaMiaPizzeria.Controllers
                 List<PizzaCategory> pizzaCategories = db.PizzaCategories.ToList();
 
                 PizzaListCategory modelForView = new PizzaListCategory();
+                modelForView.Pizzas = new Pizza();
                 modelForView.PizzaCategories = pizzaCategories;
 
                 return View(modelForView);
